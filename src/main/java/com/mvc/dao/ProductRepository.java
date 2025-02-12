@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> finByPriceGreaterThanEqual(float price);
+    List<Product> findByPriceGreaterThanEqual(float price);
 
 }
