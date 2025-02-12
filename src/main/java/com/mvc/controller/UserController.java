@@ -8,10 +8,7 @@ import com.mvc.services.UserService;
 import com.mvc.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,7 +26,7 @@ public class UserController {
             LoginResponse loginResponse;
             loginResponse = this.userService.login(loginRequest);
 
-            return ResponseEntity.ok(loginRequest);
+            return ResponseEntity.ok(loginResponse);
 
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error in login" + e.getMessage());
@@ -37,8 +34,17 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody UserRequest userRequest) {
+    public ResponseEntity create(@RequestBody UserRequest userRequest,
+                                 @RequestHeader("Authorization") String jwt) {
         try {
+
+            if(!this.jwtUtil.isTokenValid(jwt)){
+                return ResponseEntity.badRequest().body("JWT invalid");
+            }
+
+            if(!this.jwtUtil.verifyRole(jwt, "SUPER")){
+                return ResponseEntity.badRequest().body("your role does not meet the requirements");
+            }
 
             UserResponse userResponse;
             userResponse = this.userService.create(userRequest);
