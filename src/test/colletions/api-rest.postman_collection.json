@@ -178,7 +178,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTVVBFUiIsImlhdCI6MTczOTQ1NzYwNywiZXhwIjoxNzM5NDU5NDA3fQ.FjAsoS9jGhAuzFuwffQr-UzVDdpFHc7Cx_jyJ1wIzZ_qwTtaeebr9e-xOd4sBo9vJd-0V0ALboHVJ_CvstpxNw",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTczOTQ2NzIwMiwiZXhwIjoxNzM5NDY5MDAyfQ.VmDxlvfBPoJ0IG0DVk_jnoBXfhSrlWun6SHe7oQyo2T50wxwa36vVXMEoZDfgnXCnbH-nzbO6g0ivldeHipJ3Q",
 								"type": "text"
 							}
 						],
@@ -217,7 +217,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTVVBFUiIsImlhdCI6MTczOTQ1ODQ2NiwiZXhwIjoxNzM5NDYwMjY2fQ.a9CROTd8bRZtYwfFTerzMxys1wK3iE1Tzyz5JqYinU91yBXPcwQ0js9i7VYDRjPs6TuvSWJQ0lE0owfencrfWA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTczOTQ2NzIwMiwiZXhwIjoxNzM5NDY5MDAyfQ.VmDxlvfBPoJ0IG0DVk_jnoBXfhSrlWun6SHe7oQyo2T50wxwa36vVXMEoZDfgnXCnbH-nzbO6g0ivldeHipJ3Q",
 								"type": "text"
 							}
 						],
@@ -247,7 +247,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJTVVBFUiIsImlhdCI6MTczOTQ1ODQ2NiwiZXhwIjoxNzM5NDYwMjY2fQ.a9CROTd8bRZtYwfFTerzMxys1wK3iE1Tzyz5JqYinU91yBXPcwQ0js9i7VYDRjPs6TuvSWJQ0lE0owfencrfWA",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTczOTQ2NzIwMiwiZXhwIjoxNzM5NDY5MDAyfQ.VmDxlvfBPoJ0IG0DVk_jnoBXfhSrlWun6SHe7oQyo2T50wxwa36vVXMEoZDfgnXCnbH-nzbO6g0ivldeHipJ3Q",
 								"type": "text"
 							}
 						],
@@ -263,6 +263,41 @@
 								"products",
 								"by-price",
 								"1500.999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "page list filter",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTczOTQ2NzIwMiwiZXhwIjoxNzM5NDY5MDAyfQ.VmDxlvfBPoJ0IG0DVk_jnoBXfhSrlWun6SHe7oQyo2T50wxwa36vVXMEoZDfgnXCnbH-nzbO6g0ivldeHipJ3Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/products?name=Pro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Pro"
+								}
 							]
 						}
 					},
@@ -303,6 +338,37 @@
 								"products",
 								"update",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTczOTQ2NzIwMiwiZXhwIjoxNzM5NDY5MDAyfQ.VmDxlvfBPoJ0IG0DVk_jnoBXfhSrlWun6SHe7oQyo2T50wxwa36vVXMEoZDfgnXCnbH-nzbO6g0ivldeHipJ3Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/products/delete/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"delete",
+								"6"
 							]
 						}
 					},

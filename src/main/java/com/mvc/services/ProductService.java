@@ -1,10 +1,14 @@
 package com.mvc.services;
 
 import com.mvc.dao.ProductRepository;
+import com.mvc.dao.impl.ProductSpecification;
 import com.mvc.dto.ProductRequest;
 import com.mvc.dto.ProductResponse;
 import com.mvc.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,6 +78,13 @@ public class ProductService {
                 .orElseThrow(() -> new Exception("Product not found"));
         this.productRepository.delete(existingProduct);
         return "Product id" + id + "has been deleted";
+    }
+
+    public Page<Product> getProducts(String name, float price, String status, Pageable pageable) {
+        Specification<Product> spec = Specification.where(ProductSpecification.hasName(name))
+                .and(ProductSpecification.hasPriceGreaterThanOrEqual(price))
+                .and(ProductSpecification.hasStatus(status));
+        return productRepository.findAll(spec, pageable);
     }
 
 }

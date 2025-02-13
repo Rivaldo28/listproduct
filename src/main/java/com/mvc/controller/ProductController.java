@@ -6,6 +6,9 @@ import com.mvc.model.Product;
 import com.mvc.services.ProductService;
 import com.mvc.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +24,7 @@ public class ProductController {
     private final JWTUtil jwtUtil = new JWTUtil();
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody ProductRequest productRequest,
+    public ResponseEntity<?> create(@RequestBody ProductRequest productRequest,
                                  @RequestHeader("Authorization") String jwt)
     {
         try{
@@ -40,7 +43,7 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity listProduct(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<?> listProduct(@RequestHeader("Authorization") String jwt) {
         try{
             if(!this.jwtUtil.isTokenValid(jwt)){
                 return ResponseEntity.badRequest().body("Token não válido");
@@ -57,7 +60,7 @@ public class ProductController {
     }
 
     @GetMapping("/by-price/{price}")
-    public ResponseEntity getProductsByPrice(@PathVariable float price,
+    public ResponseEntity<?> getProductsByPrice(@PathVariable float price,
                                              @RequestHeader("Authorization") String jwt) {
         try{
             if(!this.jwtUtil.isTokenValid(jwt)){
@@ -75,7 +78,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity update(@PathVariable Long id,
+    public ResponseEntity<?> update(@PathVariable Long id,
                                  @RequestBody ProductRequest productRequest,
                                  @RequestHeader("Authorization") String jwt) {
         try{
@@ -111,4 +114,31 @@ public class ProductController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<?> getProducts(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "price", required = false, defaultValue = "0") float price,
+            @RequestParam(value = "status", required = false) String status,
+            @PageableDefault(size = 10) Pageable pageable,
+            @RequestHeader("Authorization") String jwt) {
+
+        try {
+            if (!this.jwtUtil.isTokenValid(jwt)) {
+                return ResponseEntity.status(401).body("Token não válido");
+            }
+
+            if (!this.jwtUtil.verifyRole(jwt, "TEC, USER, SUPER")) {
+                return ResponseEntity.status(403).body("Não cumpre com os requisitos de permissão");
+            }
+
+            Page<Product> products = productService.getProducts(name, price, status, pageable);
+
+            return ResponseEntity.ok(products);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao buscar produtos: " + e.getMessage());
+        }
+    }
+
 }
+
