@@ -1,24 +1,25 @@
-# Stage 1: Build
-FROM maven:3.9.5-eclipse-temurin-21 AS build
+# Fase de construção usando Maven
+FROM maven:3.9.0-openjdk-21 AS build
 
-# Copiar os arquivos do projeto para o contêiner
-COPY pom.xml .
-COPY src/ ./src/
-
-# Empacotar a aplicação
-RUN mvn clean package -DskipTests
-
-# Stage 2: Run
-FROM eclipse-temurin:21-jdk-jammy
-
-# Defina o diretório de trabalho
+# Definir diretório de trabalho
 WORKDIR /app
 
-# Expor a porta 8080
+# Copiar pom.xml e baixar as dependências
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Fase de execução usando OpenJDK
+FROM openjdk:21-jdk-slim
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Copiar o JAR gerado da fase de construção
+COPY --from=build /app/target/listproduct-0.0.1-SNAPSHOT.jar app.jar
+
+# Expor a porta que a aplicação irá usar
 EXPOSE 8080
 
-# Copiar o JAR construído da etapa de build
-COPY --from=build /target/listproduct-0.0.1-SNAPSHOT.jar app.jar
-
-# Executar a aplicação
+# Comando para executar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
