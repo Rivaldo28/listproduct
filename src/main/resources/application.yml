@@ -3,15 +3,18 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: senha
+    url: jdbc:postgresql://bldkhdthfjfgjyxdt9vz-postgresql.services.clever-cloud.com:50013/bldkhdthfjfgjyxdt9vz
+    username: usxdiwpcoi8povipxnwl
+    password: Fvs2goe2MZb9ha66yZvLKQpkFnaBXl
+    driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
       jdbc:
-        lob.non-contextual-creation: true
+        lob:
+          non-contextual-creation: true
     properties:
       hibernate:
         show_sql: true
@@ -24,3 +27,4 @@ spring:
       level:
         org.flywaydb: DEBUG
     validate-on-migrate: false
+    baseline-on-migrate: true
