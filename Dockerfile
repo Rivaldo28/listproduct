@@ -1,5 +1,5 @@
 # Fase de construção usando Maven
-FROM maven:3.9.0-openjdk-21 AS build
+FROM maven:3.4.2-openjdk-21 AS build
 
 # Definir diretório de trabalho
 WORKDIR /app
