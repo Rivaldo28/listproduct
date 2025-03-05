@@ -1,5 +1,7 @@
-# Fase de construção usando Maven com Java 21
-FROM maven:3.9.0-openjdk-21 AS build
+FROM openjdk:21-slim AS build
+
+# Instalar Maven
+RUN apt-get update && apt-get install -y maven
 
 # Definir diretório de trabalho
 WORKDIR /app
