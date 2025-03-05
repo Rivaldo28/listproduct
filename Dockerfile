@@ -1,5 +1,5 @@
-# Fase de construção usando Maven
-FROM maven:3.4.2-openjdk-21 AS build
+# Fase de construção usando Maven com Java 21
+FROM maven:3.9.0-openjdk-21 AS build
 
 # Definir diretório de trabalho
 WORKDIR /app
@@ -9,14 +9,14 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Fase de execução usando OpenJDK
-FROM openjdk:21-jdk-slim
+# Fase de execução usando OpenJDK 21
+FROM openjdk:21-slim
 
 # Definir diretório de trabalho
 WORKDIR /app
 
 # Copiar o JAR gerado da fase de construção
-COPY --from=build /target/listproduct-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/listproduct-0.0.1-SNAPSHOT.jar app.jar
 
 # Expor a porta que a aplicação irá usar
 EXPOSE 8080
