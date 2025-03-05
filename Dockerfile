@@ -16,7 +16,7 @@ FROM openjdk:21-jdk-slim
 WORKDIR /app
 
 # Copiar o JAR gerado da fase de construção
-COPY --from=build /app/target/listproduct-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /target/listproduct-0.0.1-SNAPSHOT.jar app.jar
 
 # Expor a porta que a aplicação irá usar
 EXPOSE 8080
